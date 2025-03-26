@@ -1,0 +1,552 @@
+:root {
+  --neon-blue: #00f3ff;
+  --neon-purple: #9900ff;
+  --neon-pink: #ff00f7;
+  --dark-bg: #050714;
+  --cyberpunk-yellow: #fcee0a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Rajdhani", sans-serif;
+  background-color: var(--dark-bg);
+  color: white;
+  overflow: hidden;
+  height: 100vh;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" stroke="%2300f3ff" stroke-width="1" fill="none"/></svg>')
+      8 8,
+    auto;
+}
+
+#bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--dark-bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  transition: opacity 1s ease-out;
+}
+
+.loader.hide-instant {
+  opacity: 0;
+  transition: opacity 0.1s linear;
+  pointer-events: none;
+}
+
+.loader-text {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--neon-blue);
+  text-shadow: 0 0 10px var(--neon-blue);
+}
+
+.progress-bar {
+  width: 300px;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(to right, var(--neon-purple), var(--neon-blue));
+  transition: width 0.3s ease-out;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.progress-complete .progress-bar-fill {
+  transition: none;
+}
+
+/* 헤더 및 네비게이션 관련 스타일 제거 */
+header {
+  display: none; /* 헤더 전체를 숨김 */
+}
+
+/* 로고 숨김 */
+.logo {
+  display: none;
+}
+
+/* 네비게이션 숨김 */
+nav {
+  display: none;
+}
+
+/* 섹션 상단 여백 조정 (헤더가 없어서 필요한 경우) */
+.section-content {
+  padding-top: 2rem;
+}
+
+/* 모바일에서 섹션 컨텐츠 상단 패딩 조정 */
+@media (max-width: 768px) {
+  .centered-content {
+    padding-top: 10vh; /* 헤더가 없으므로 패딩 줄임 */
+  }
+}
+
+.content-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.sections-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  transform-style: preserve-3d;
+}
+
+.section,
+.horizontal-section {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  transition: opacity 0.5s ease;
+  will-change: transform, opacity;
+}
+
+.section-content {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+.section-title,
+.section-description {
+  position: relative;
+  opacity: 0;
+  pointer-events: auto;
+}
+
+.section.active,
+.horizontal-section.active {
+  z-index: 10;
+  opacity: 1;
+}
+
+/* 수평 섹션 설정 */
+.horizontal-section {
+  left: 100vw;
+}
+
+/* 섹션 내용의 최대 너비 제한 */
+.section-content {
+  max-width: 80%;
+}
+
+/* 섹션 타이틀과 설명 사이 간격 */
+.section-title {
+  position: relative;
+  color: white;
+  font-size: 4rem;
+  letter-spacing: 3px;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7),
+    0 0 20px rgba(255, 255, 255, 0.5);
+  animation: pulse-title 3s infinite;
+  transition: color 0.5s ease, text-shadow 0.5s ease;
+}
+
+/* 각 섹션별 고유 네온 색상 지정 */
+#section1 .section-title {
+  color: var(--neon-blue);
+  text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+}
+
+#section2 .section-title {
+  color: var(--neon-purple);
+  text-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple);
+}
+
+#section3 .section-title {
+  color: var(--neon-pink);
+  text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
+}
+
+/* 섹션 제목용 펄스 애니메이션 */
+@keyframes pulse-title {
+  0%,
+  100% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 15px currentColor, 0 0 30px currentColor,
+      0 0 45px currentColor;
+  }
+}
+
+.section-description {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  max-width: 600px;
+}
+
+.scroll-indicator {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 100;
+  animation: pulse 2s infinite;
+}
+
+.scroll-indicator span {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+}
+
+.arrow {
+  font-size: 1.5rem;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+/* 네온 효과 */
+.neon-text {
+  color: white;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px var(--neon-blue),
+    0 0 30px var(--neon-blue), 0 0 40px var(--neon-blue);
+}
+
+.glitch-effect {
+  position: relative;
+}
+
+.glitch-effect::before,
+.glitch-effect::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-effect::before {
+  left: 2px;
+  text-shadow: -2px 0 var(--neon-pink);
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim-1 5s infinite linear alternate-reverse;
+}
+
+.glitch-effect::after {
+  left: -2px;
+  text-shadow: 2px 0 var(--neon-blue);
+  clip: rect(24px, 450px, 36px, 0);
+  animation: glitch-anim-2 5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+  0% {
+    clip: rect(24px, 450px, 36px, 0);
+  }
+  20% {
+    clip: rect(62px, 450px, 78px, 0);
+  }
+  40% {
+    clip: rect(12px, 450px, 18px, 0);
+  }
+  60% {
+    clip: rect(48px, 450px, 56px, 0);
+  }
+  80% {
+    clip: rect(32px, 450px, 86px, 0);
+  }
+  100% {
+    clip: rect(92px, 450px, 96px, 0);
+  }
+}
+
+@keyframes glitch-anim-2 {
+  0% {
+    clip: rect(92px, 450px, 96px, 0);
+  }
+  20% {
+    clip: rect(32px, 450px, 86px, 0);
+  }
+  40% {
+    clip: rect(48px, 450px, 56px, 0);
+  }
+  60% {
+    clip: rect(12px, 450px, 18px, 0);
+  }
+  80% {
+    clip: rect(62px, 450px, 78px, 0);
+  }
+  100% {
+    clip: rect(24px, 450px, 36px, 0);
+  }
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2.5rem;
+  }
+
+  .section-description {
+    font-size: 0.9rem;
+  }
+
+  nav ul li {
+    margin-left: 1rem;
+  }
+
+  nav ul li a {
+    font-size: 0.9rem;
+  }
+
+  .section-content {
+    width: 85%;
+    padding: 1rem;
+  }
+}
+
+/* 태블릿 화면용 스타일 */
+@media (min-width: 769px) and (max-width: 1200px) {
+  .section-content {
+    width: 75%;
+  }
+
+  .section-title {
+    font-size: 3.5rem;
+  }
+
+  .coming-soon-title {
+    font-size: 3.5rem;
+  }
+}
+
+/* 활성화된 섹션은 완전히 보이게 함 */
+.section.active .section-title,
+.section.active .section-description,
+.horizontal-section.active .section-title,
+.horizontal-section.active .section-description {
+  opacity: 1;
+}
+
+/* 섹션이 전환되는 동안의 상태 개선 */
+.sections-container.transitioning .section {
+  pointer-events: none; /* 전환 중 클릭 방지 */
+}
+
+/* Coming Soon 관련 스타일 추가 */
+.coming-soon-title {
+  color: var(--neon-blue) !important;
+  text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue) !important;
+  animation: pulse-text 2s infinite !important;
+}
+
+.coming-soon-decoration {
+  display: flex;
+  align-items: center;
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 300px;
+}
+
+.cyber-line {
+  flex-grow: 1;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--neon-blue),
+    transparent
+  );
+}
+
+.cyber-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--neon-blue);
+  margin: 0 10px;
+  box-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+  animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-text {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 15px var(--neon-blue), 0 0 30px var(--neon-blue);
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+    box-shadow: 0 0 15px var(--neon-blue), 0 0 30px var(--neon-blue);
+  }
+}
+
+/* 수평 섹션에 특별한 백그라운드 효과 추가 */
+.horizontal-section:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+      circle at 20% 30%,
+      rgba(0, 243, 255, 0.1) 0%,
+      transparent 80%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(153, 0, 255, 0.1) 0%,
+      transparent 80%
+    );
+  pointer-events: none;
+}
+
+/* 반응형 섹션 컨텐츠 레이아웃 */
+.centered-content {
+  text-align: center;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 15vh;
+}
+
+.centered-content .section-title {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.centered-content .section-description {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 90%;
+}
+
+/* 모바일 화면 추가 최적화 */
+@media (max-width: 768px) {
+  .section-content {
+    width: 90%;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .section-title {
+    font-size: 2.2rem;
+    text-align: center;
+  }
+
+  .section-description {
+    font-size: 0.9rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .coming-soon-title {
+    font-size: 2.5rem;
+  }
+
+  .coming-soon-decoration {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* 스크롤 인디케이터 위치 조정 */
+  .scroll-indicator {
+    bottom: 5vh;
+  }
+}
+
+/* 태블릿 화면 최적화 */
+@media (min-width: 769px) and (max-width: 1200px) {
+  .section-content {
+    width: 80%;
+  }
+
+  .section-title {
+    text-align: center;
+  }
+
+  .section-description {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

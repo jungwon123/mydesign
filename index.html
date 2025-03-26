@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CYBER WAVE</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="loader">
+      <div class="loader-text">charging...</div>
+      <div class="progress-bar">
+        <div class="progress-bar-fill"></div>
+      </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="scroll-indicator">
+        <span>스크롤</span>
+        <div class="arrow">↓</div>
+      </div>
+
+      <header>
+        <div class="logo">CYBER<span>WAVE</span></div>
+        <nav>
+          <ul>
+            <li><a href="#section1">HOME</a></li>
+            <li><a href="#section2">PROJECTS</a></li>
+            <li><a href="#section3">ABOUT</a></li>
+            <li><a href="#section4">CONTACT</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <div class="sections-container">
+        <!-- 섹션들은 스크립트로 관리됩니다 -->
+      </div>
+    </div>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- 원래 라이브러리 로드 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.11.4/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+
+    <!-- 쉐이더 스크립트 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/FXAAShader.min.js"></script>
+
+    <!-- 포스트 프로세싱 스크립트 -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.min.js"></script>
+
+    <!-- 원래 스크립트 로드 -->
+    <script src="script.js"></script>
+  </body>
+</html>
