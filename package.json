@@ -4,7 +4,7 @@
   "description": "3D 웹 애플리케이션",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "serve -s build -l 8080",
     "dev": "nodemon server.js"
   },
   "dependencies": {
